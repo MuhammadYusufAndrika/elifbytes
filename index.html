@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElifBytes - Cutting-edge Software Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            dark: '#0a192f',
+                            light: '#112240',
+                            bright: '#233554'
+                        },
+                        accent: '#64ffda',
+                        electric: '#00bfff',
+                        gray: '#ccd6f6',
+                        light: '#e6f1ff'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #0a192f;
+            color: #ccd6f6;
+        }
+        
+        .wave-bg {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(0, 191, 255, 0.1)' fill-opacity='1' d='M0,256L48,245.3C96,235,192,213,288,197.3C384,181,480,171,576,181.3C672,192,768,224,864,218.7C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .network-bg {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 191, 255, 0.15) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(0, 191, 255, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: translateY(-10px);
+            color: #00bfff;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 191, 255, 0.25);
+        }
+        
+        .project-overlay {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .team-member:hover .team-photo {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 191, 255, 0.4);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #00bfff;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #00bfff 0%, #64ffda 100%);
+            background-size: 200% 200%;
+            transition: background-position 0.5s ease, transform 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            background-position: 100% 100%;
+            transform: translateY(-3px);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #112240 0%, #0a192f 100%);
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .circle-animation {
+            position: absolute;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(100, 255, 218, 0.1));
+            border-radius: 50%;
+            filter: blur(30px);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 bg-primary-dark z-50 flex items-center justify-center">
+        <div class="flex flex-col items-center">
+            <div class="w-20 h-20 border-4 border-electric border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-4 text-gray text-lg">Loading ElifBytes...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full z-40 bg-primary-dark/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-electric flex items-center justify-center mr-3">
+                        <span class="text-primary-dark font-bold text-xl">EB</span>
+                    </div>
+                    <span class="text-gray font-bold text-2xl">Elif<span class="text-electric">Bytes</span></span>
+                </a>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray hover:text-electric">Home</a>
+                    <a href="#about" class="nav-link text-gray hover:text-electric">About</a>
+                    <a href="#services" class="nav-link text-gray hover:text-electric">Services</a>
+                    <a href="#projects" class="nav-link text-gray hover:text-electric">Projects</a>
+                    <a href="#testimonials" class="nav-link text-gray hover:text-electric">Testimonials</a>
+                    <a href="#contact" class="nav-link text-gray hover:text-electric">Contact</a>
+                </nav>
+                
+                <button id="mobile-menu-button" class="md:hidden text-gray hover:text-electric focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary-light px-6 py-4">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="text-gray hover:text-electric">Home</a>
+                <a href="#about" class="text-gray hover:text-electric">About</a>
+                <a href="#services" class="text-gray hover:text-electric">Services</a>
+                <a href="#projects" class="text-gray hover:text-electric">Projects</a>
+                <a href="#testimonials" class="text-gray hover:text-electric">Testimonials</a>
+                <a href="#contact" class="text-gray hover:text-electric">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-28 pb-20 px-4 wave-bg min-h-screen flex items-center relative overflow-hidden">
+        <div class="blob top-[20%] left-[-10%] opacity-50"></div>
+        <div class="blob bottom-[10%] right-[-10%] opacity-30"></div>
+        
+        <div class="container mx-auto px-6 z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in" style="animation-delay: 0.1s;">
+                        <span class="text-gray block">Empowering Your Ideas</span>
+                        <span class="text-electric">Through Cutting-edge Software</span>
+                    </h1>
+                    <p class="text-light text-lg mb-8 opacity-90 animate-fade-in" style="animation-delay: 0.3s;">
+                        We transform your vision into scalable, secure, and innovative digital solutions that drive business growth and exceed expectations.
+                    </p>
+                    <div class="flex space-x-4 animate-fade-in" style="animation-delay: 0.5s;">
+                        <a href="#contact" class="btn-gradient text-primary-dark font-semibold px-8 py-3 rounded-lg shadow-lg">
+                            Let's Build Together
+                        </a>
+                        <a href="#projects" class="border border-electric text-electric font-semibold px-8 py-3 rounded-lg hover:bg-electric/10 transition duration-300">
+                            View Our Work
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-80 h-80 sm:w-96 sm:h-96">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="App development" 
+                             class="w-full h-full object-cover rounded-xl shadow-2xl floating"
+                             style="animation-delay: 0.2s;">
+                        <div class="absolute -bottom-5 -right-5 bg-primary-light p-4 rounded-xl shadow-lg animate-slide-up" style="animation-delay: 0.7s;">
+                            <div class="flex items-center">
+                                <div class="bg-electric rounded-full p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray">Recent Success</p>
+                                    <p class="text-electric font-semibold">++Projects</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scrolling indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-gray hover:text-electric">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 bg-gradient-to-b from-primary-dark to-primary-light">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-semibold text-electric mb-2">Who We Are</h2>
+                <div class="w-20 h-1 bg-electric mx-auto mb-6"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-gray">Transforming Ideas Into Digital Reality</h3>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 animate-slide-up">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+                             alt="Our team" 
+                             class="rounded-xl shadow-xl w-full">
+                        <div class="absolute -bottom-6 -left-6 bg-primary-bright p-6 rounded-xl shadow-lg border border-electric/20">
+                            <h4 class="text-xl font-bold text-gray mb-2">5+</h4>
+                            <p class="text-light">Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 animate-slide-up" style="animation-delay: 0.2s;">
+                    <p class="text-light text-lg leading-relaxed mb-6">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
+                    <p class="text-light text-lg leading-relaxed mb-8">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <div class="bg-electric/10 rounded-full p-2 mr-3">
+                                <i class="fas fa-check-circle text-electric"></i>
+                            </div>
+                            <span class="text-gray">Cutting-edge technologies</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-electric/10 rounded-full p-2 mr-3">
+                                <i class="fas fa-check-circle text-electric"></i>
+                            </div>
+                            <span class="text-gray">Agile development</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-electric/10 rounded-full p-2 mr-3">
+                                <i class="fas fa-check-circle text-electric"></i>
+                            </div>
+                            <span class="text-gray">Client-focused approach</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 px-4 bg-primary-light">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-semibold text-electric mb-2">Our Expertise</h2>
+                <div class="w-20 h-1 bg-electric mx-auto mb-6"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-gray">Services We Provide</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-primary-bright rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300 animate-slide-up">
+                    <div class="service-icon w-14 h-14 bg-electric/10 rounded-full flex items-center justify-center text-2xl text-electric mb-6 transition duration-300">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-3">Web App Development</h3>
+                    <p class="text-light mb-4">Building responsive, scalable web applications with modern frameworks like React, Vue, and Node.js.</p>
+                    <a href="#" class="text-electric font-medium inline-flex items-center">
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-primary-bright rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300 animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="service-icon w-14 h-14 bg-electric/10 rounded-full flex items-center justify-center text-2xl text-electric mb-6 transition duration-300">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-3">Mobile App Development</h3>
+                    <p class="text-light mb-4">Creating high-performance iOS and Android apps using native and cross-platform technologies.</p>
+                    <a href="#" class="text-electric font-medium inline-flex items-center">
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-primary-bright rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300 animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="service-icon w-14 h-14 bg-electric/10 rounded-full flex items-center justify-center text-2xl text-electric mb-6 transition duration-300">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-3">UI/UX Design</h3>
+                    <p class="text-light mb-4">Crafting intuitive and beautiful interfaces that enhance user experience and engagement.</p>
+                    <a href="#" class="text-electric font-medium inline-flex items-center">
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-primary-bright rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300 animate-slide-up" style="animation-delay: 0.6s;">
+                    <div class="service-icon w-14 h-14 bg-electric/10 rounded-full flex items-center justify-center text-2xl text-electric mb-6 transition duration-300">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-3">AI Solutions</h3>
+                    <p class="text-light mb-4">Implementing machine learning and AI to automate processes and provide intelligent insights.</p>
+                    <a href="#" class="text-electric font-medium inline-flex items-center">
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 bg-primary-dark network-bg">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-semibold text-electric mb-2">Our Portfolio</h2>
+                <div class="w-20 h-1 bg-electric mx-auto mb-6"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-gray">Projects That Inspire</h3>
+            </div>
+            
+            <!-- Filter -->
+            <div class="flex justify-center mb-12">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button data-filter="all" class="px-6 py-2 border border-electric/30 text-gray rounded-l-lg active:bg-electric/10 hover:bg-electric/10 hover:text-electric transition">All</button>
+                    <button data-filter="web" class="px-6 py-2 border-t border-b border-electric/30 text-gray hover:bg-electric/10 hover:text-electric transition">Web</button>
+                    <button data-filter="mobile" class="px-6 py-2 border-t border-b border-electric/30 text-gray hover:bg-electric/10 hover:text-electric transition">Mobile</button>
+                    <button data-filter="uiux" class="px-6 py-2 border-t border-b border-electric/30 text-gray hover:bg-electric/10 hover:text-electric transition">UI/UX</button>
+                    <button data-filter="ai" class="px-6 py-2 border border-electric/30 text-gray rounded-r-lg hover:bg-electric/10 hover:text-electric transition">AI</button>
+                </div>
+            </div>
+            
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card web" data-category="web">
+                    <div class="relative overflow-hidden rounded-xl h-80">
+                        <img src="/assets/1.jpg" 
+                             alt="FinSmart Dashboard" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-primary-dark/90 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-bold text-gray mb-2">FinSmart Dashboard</h3>
+                            <p class="text-light mb-4">Advanced financial analytics dashboard with real-time data visualization for enterprises.</p>
+                            <a href="#" class="text-electric font-medium inline-flex items-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card mobile" data-category="mobile">
+                    <div class="relative overflow-hidden rounded-xl h-80">
+                        <img src="/assets/2.jpg" 
+                             alt="SmartLaundry App" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-primary-dark/90 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-bold text-gray mb-2">SmartLaundry App</h3>
+                            <p class="text-light mb-4">IoT-powered laundry management system with NFC integration and payment processing.</p>
+                            <a href="#" class="text-electric font-medium inline-flex items-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card web" data-category="web">
+                    <div class="relative overflow-hidden rounded-xl h-80">
+                        <img src="/assets/3.jpg" 
+                             alt="EduVerse LMS" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-primary-dark/90 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-bold text-gray mb-2">EduVerse LMS</h3>
+                            <p class="text-light mb-4">Comprehensive learning management system with interactive course builder and analytics.</p>
+                            <a href="#" class="text-electric font-medium inline-flex items-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card uiux" data-category="uiux">
+                    <div class="relative overflow-hidden rounded-xl h-80">
+                        <img src="/assets/4.jpg" 
+                             alt="MediTrack UI" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-primary-dark/90 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-bold text-gray mb-2">MediTrack UI</h3>
+                            <p class="text-light mb-4">Healthcare app interface with appointment scheduling and medication reminders.</p>
+                            <a href="#" class="text-electric font-medium inline-flex items-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card ai" data-category="ai">
+                    <div class="relative overflow-hidden rounded-xl h-80">
+                        <img src="/assets/5.jpg" 
+                             alt="AI Recruiter" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-primary-dark/90 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-bold text-gray mb-2">AI Recruiter</h3>
+                            <p class="text-light mb-4">Intelligent recruitment platform with candidate matching and screening automation.</p>
+                            <a href="#" class="text-electric font-medium inline-flex items-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card mobile" data-category="mobile">
+                    <div class="relative overflow-hidden rounded-xl h-80">
+                        <img src="/assets/6.jpg" 
+                             alt="FoodExpress" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-primary-dark/90 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-bold text-gray mb-2">FoodExpress</h3>
+                            <p class="text-light mb-4">Food delivery app with real-time tracking, loyalty program, and recommendation engine.</p>
+                            <a href="#" class="text-electric font-medium inline-flex items-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/projects.html" class="inline-flex items-center px-8 py-3 border border-electric rounded-lg text-electric hover:bg-electric/10 transition duration-300">
+                    View All Projects
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 px-4 bg-primary-light">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-semibold text-electric mb-2">What Our Clients Say</h2>
+                <div class="w-20 h-1 bg-electric mx-auto mb-6"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-gray">Success Stories</h3>
+            </div>
+            
+            <div class="relative max-w-6xl mx-auto">
+                <div class="testimonial-carousel">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card p-8 rounded-xl mb-8">
+                        <div class="flex items-start mb-6">
+                            <img src="https://banggaikep.go.id/portal/wp-content/uploads/2024/03/jokowi-1.jpg" 
+                                 alt="John Smith" 
+                                 class="w-16 h-16 rounded-full border-2 border-electric/50 mr-4">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray">Mulyono</h4>
+                                <p class="text-electric">CEO, FinTech Solutions</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric"></i>
+                        </div>
+                        <p class="text-light leading-relaxed">
+                            "ElifBytes delivered beyond our expectations. Their FinSmart Dashboard not only met our technical requirements but actually transformed how our analysts work with data. The team was responsive, professional, and deeply technical."
+                        </p>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card p-8 rounded-xl mb-8">
+                        <div class="flex items-start mb-6">
+                            <img src="https://banggaikep.go.id/portal/wp-content/uploads/2024/03/jokowi-1.jpg" 
+                                 alt="Sarah Johnson" 
+                                 class="w-16 h-16 rounded-full border-2 border-electric/50 mr-4">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray">Mulyono</h4>
+                                <p class="text-electric">Director of Product, EduTech</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric"></i>
+                        </div>
+                        <p class="text-light leading-relaxed">
+                            "Working with ElifBytes on our LMS platform was a game-changer. They understood our complex requirements for course management and delivered a solution that's both powerful and intuitive. Their UI/UX design expertise made the product truly stand out in our market."
+                        </p>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card p-8 rounded-xl mb-8">
+                        <div class="flex items-start mb-6">
+                            <img src="https://banggaikep.go.id/portal/wp-content/uploads/2024/03/jokowi-1.jpg" 
+                                 alt="Michael Chen" 
+                                 class="w-16 h-16 rounded-full border-2 border-electric/50 mr-4">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray">Mulyono</h4>
+                                <p class="text-electric">CTO, Healthcare Innovations</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric mr-1"></i>
+                            <i class="fas fa-star text-electric"></i>
+                        </div>
+                        <p class="text-light leading-relaxed">
+                            "The SmartLaundry app exceeded all our KPIs. ElifBytes' approach to IoT integration was innovative and their attention to security considerations was impressive. We've seen a 40% increase in customer engagement since launch."
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="testimonial-nav-dot w-3 h-3 rounded-full bg-electric/30 hover:bg-electric active:bg-electric focus:outline-none"></button>
+                    <button class="testimonial-nav-dot w-3 h-3 rounded-full bg-electric/30 hover:bg-electric active:bg-electric focus:outline-none"></button>
+                    <button class="testimonial-nav-dot w-3 h-3 rounded-full bg-electric/30 hover:bg-electric active:bg-electric focus:outline-none"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 px-4 bg-primary-bright">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-semibold text-electric mb-2">Meet Our Team</h2>
+                <div class="w-20 h-1 bg-electric mx-auto mb-6"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-gray">Experts Behind The Magic</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Team Member 1 -->
+                <div class="team-member text-center">
+                    <div class="relative mx-auto mb-6 w-48 h-48">
+                        <div class="absolute inset-0 rounded-full bg-electric/20 animate-pulse-slow"></div>
+                        <img src="https://banggaikep.go.id/portal/wp-content/uploads/2024/03/jokowi-1.jpg" 
+                             alt="Elena Rodriguez" 
+                             class="team-photo relative w-full h-full rounded-full object-cover border-2 border-electric transition duration-300">
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-1">Elena Rodriguez</h3>
+                    <p class="text-electric mb-4">CEO & Co-Founder</p>
+                    <p class="text-light">
+                        Full-stack developer with 12+ years experience building enterprise-grade applications.
+                    </p>
+                    <div class="flex justify-center space-x-4 mt-4">
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-member text-center">
+                    <div class="relative mx-auto mb-6 w-48 h-48">
+                        <div class="absolute inset-0 rounded-full bg-electric/20 animate-pulse-slow" style="animation-delay: 0.3s;"></div>
+                        <img src="https://banggaikep.go.id/portal/wp-content/uploads/2024/03/jokowi-1.jpg" 
+                             alt="David Kim" 
+                             class="team-photo relative w-full h-full rounded-full object-cover border-2 border-electric transition duration-300">
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-1">David Kim</h3>
+                    <p class="text-electric mb-4">CTO</p>
+                    <p class="text-light">
+                        AI/ML specialist with expertise in natural language processing and computer vision.
+                    </p>
+                    <div class="flex justify-center space-x-4 mt-4">
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-member text-center">
+                    <div class="relative mx-auto mb-6 w-48 h-48">
+                        <div class="absolute inset-0 rounded-full bg-electric/20 animate-pulse-slow" style="animation-delay: 0.6s;"></div>
+                        <img src="https://banggaikep.go.id/portal/wp-content/uploads/2024/03/jokowi-1.jpg" 
+                             alt="Sophie Williams" 
+                             class="team-photo relative w-full h-full rounded-full object-cover border-2 border-electric transition duration-300">
+                    </div>
+                    <h3 class="text-xl font-bold text-gray mb-1">Sophie Williams</h3>
+                    <p class="text-electric mb-4">Head of Design</p>
+                    <p class="text-light">
+                        Creative director with a passion for intuitive interfaces and engaging user experiences.
+                    </p>
+                    <div class="flex justify-center space-x-4 mt-4">
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="py-20 px-4 relative overflow-hidden">
+        <div class="circle-animation w-80 h-80 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+        <div class="circle-animation w-64 h-64 rounded-full top-1/3 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+        <div class="circle-animation w-72 h-72 rounded-full top-2/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+        
+        <div class="container mx-auto text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray mb-6">
+                Ready to turn your vision into a powerful digital product?
+            </h2>
+            <p class="text-light text-xl mb-10 max-w-3xl mx-auto">
+                Let's discuss how we can help you create innovative, robust, and scalable software solutions.
+            </p>
+            <a href="#contact" class="btn-gradient text-primary-dark font-semibold px-10 py-4 rounded-lg shadow-lg text-lg inline-block">
+                Contact Us Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-primary-dark py-16 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Logo & About -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-electric flex items-center justify-center mr-3">
+                            <span class="text-primary-dark font-bold text-xl">EB</span>
+                        </div>
+                        <span class="text-gray font-bold text-2xl">Elif<span class="text-electric">Bytes</span></span>
+                    </div>
+                    <p class="text-light mb-6">
+                        Empowering businesses with innovative software solutions for the digital age.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray hover:text-electric">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-light hover:text-electric">Home</a></li>
+                        <li><a href="#about" class="text-light hover:text-electric">About Us</a></li>
+                        <li><a href="#services" class="text-light hover:text-electric">Services</a></li>
+                        <li><a href="#projects" class="text-light hover:text-electric">Projects</a></li>
+                        <li><a href="#" class="text-light hover:text-electric">Careers</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray mb-6">Contact Us</h3>
+                    <address class="not-italic">
+                        <p class="text-light mb-4 flex items-start">
+                            <i class="fas fa-map-marker-alt text-electric mr-2 mt-1"></i>
+                            <span>Yogyakarta</span>
+                        </p>
+                        <p class="text-light mb-4 flex items-center">
+                            <i class="fas fa-phone-alt text-electric mr-2"></i>
+                            <span>085212344567</span>
+                        </p>
+                        <p class="text-light flex items-center">
+                            <i class="fas fa-envelope text-electric mr-2"></i>
+                            <span>elifbytes@gmail.com</span>
+                        </p>
+                    </address>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray mb-6">Newsletter</h3>
+                    <p class="text-light mb-4">
+                        Subscribe to our newsletter for the latest updates and insights.
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your Email" class="bg-primary-light text-gray px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-electric w-full" required>
+                        <button type="submit" class="bg-electric text-primary-dark px-4 py-2 rounded-r-lg hover:bg-electric/90 transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-electric/20 mt-16 pt-8 text-center">
+                <p class="text-light">
+                    &copy; 2023 ElifBytes. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Preloader
+            setTimeout(function() {
+                document.getElementById('preloader').classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(function() {
+                    document.getElementById('preloader').style.display = 'none';
+                }, 500);
+            }, 1000);
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Project filtering
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active filter button
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-electric/10', 'text-electric');
+                        if(btn === this) {
+                            btn.classList.add('bg-electric/10', 'text-electric');
+                        }
+                    });
+                    
+                    // Filter projects
+                    projectCards.forEach(card => {
+                        if(filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Simple testimonial carousel
+            let currentTestimonial = 0;
+            const testimonials = document.querySelectorAll('.testimonial-card');
+            const dots = document.querySelectorAll('.testimonial-nav-dot');
+            
+            function showTestimonial(index) {
+                testimonials.forEach((testimonial, i) => {
+                    testimonial.style.display = i === index ? 'block' : 'none';
+                });
+                
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-electric', i === index);
+                    dot.classList.toggle('bg-electric/30', i !== index);
+                });
+                
+                currentTestimonial = index;
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showTestimonial(index));
+            });
+            
+            // Initialize
+            showTestimonial(0);
+            
+            // Auto-rotate testimonials
+            setInterval(() => {
+                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(currentTestimonial);
+            }, 5000);
+            
+            // Add floating animations to elements at different delays
+            const floatElements = document.querySelectorAll('.animate-float');
+            floatElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.2}s`;
+            });
+            
+            // Create cursor circle effect
+            document.addEventListener('mousemove', function(e) {
+                const cursor = document.createElement('div');
+                cursor.className = 'circle-animation';
+                cursor.style.left = e.pageX + 'px';
+                cursor.style.top = e.pageY + 'px';
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+                cursor.style.transition = 'width 0.3s ease, height 0.3s ease, opacity 0.5s ease';
+                
+                document.body.appendChild(cursor);
+                
+                setTimeout(() => {
+                    cursor.style.width = '40px';
+                    cursor.style.height = '40px';
+                    cursor.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    cursor.remove();
+                }, 500);
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(!targetElement) return;
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if(!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Add fade-in animation for elements when they come into view
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate-fade-in, .animate-slide-up');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if(elementPosition < screenPosition) {
+                        const delay = element.style.animationDelay || '0s';
+                        element.style.opacity = '1';
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initialize
+            
+            // Add hover animation to buttons
+            document.querySelectorAll('.btn-gradient').forEach(button => {
+                button.addEventListener('mousemove', function(e) {
+                    const x = e.pageX - this.getBoundingClientRect().left;
+                    const y = e.pageY - this.getBoundingClientRect().top;
+                    
+                    this.style.setProperty('--x-pos', x + 'px');
+                    this.style.setProperty('--y-pos', y + 'px');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
