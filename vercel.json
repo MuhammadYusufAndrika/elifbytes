@@ -1,8 +1,15 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/$1.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/web", "destination": "/web.html" },
+    { "source": "/projects", "destination": "/projects.html" },
+    { "source": "/mobile", "destination": "/mobile.html" },
+    { "source": "/erp", "destination": "/erp.html" }
+  ],
+  "redirects": [
+    { "source": "/web.html", "destination": "/web", "permanent": true },
+    { "source": "/projects.html", "destination": "/projects", "permanent": true },
+    { "source": "/mobile.html", "destination": "/mobile", "permanent": true },
+    { "source": "/erp.html", "destination": "/erp", "permanent": true }
   ]
 }
