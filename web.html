@@ -62,7 +62,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 container mx-auto">
         <!-- Project Card Template -->
         <div class="project-card bg-primary-light rounded-xl overflow-hidden" data-aos="zoom-in" data-aos-duration="800">
-          <img src="/assets/web1.png" alt="Project 1" class="w-full h-48 object-cover" />
+          <img src="/assets/web1.png" alt="Project 1" class="w-full h-50 object-cover" />
           <div class="p-6">
             <h3 class="text-xl font-bold text-gray mb-2">Amarfa Kost</h3>
 
@@ -72,6 +72,23 @@
               <button onclick="toggleDescription('desc-1', this)" class="text-electric font-medium inline-flex items-center hover:underline">View More <i class="fas fa-chevron-down ml-2"></i></button>
 
               <a href="https://www.amarfakost.com/" class="text-electric font-medium inline-flex items-center hover:underline"> View Case Study <i class="fas fa-arrow-right ml-2"></i> </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+
+        <div class="project-card bg-primary-light rounded-xl overflow-hidden" data-aos="zoom-in" data-aos-duration="800">
+          <img src="/assets/rasngijo.jpg" alt="Project 2" class="w-full h-50 object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray mb-2">rasngijo</h3>
+
+            <p id="desc-2" class="text-light mb-4 text-justify overflow-hidden max-h-20 transition-all duration-300 ease-in-out">Rukun Agawe Santoso adalah organisasi masyarakat yang menggunakan aplikasi untuk media informasi dan pelayanan warga.</p>
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-4 mb-2">
+              <button onclick="toggleDescription('desc-2', this)" class="text-electric font-medium inline-flex items-center hover:underline">View More <i class="fas fa-chevron-down ml-2"></i></button>
+
+              <a href="https://rasngijo.com/" class="text-electric font-medium inline-flex items-center hover:underline"> View Case Study <i class="fas fa-arrow-right ml-2"></i> </a>
             </div>
           </div>
         </div>
@@ -94,6 +111,7 @@
 
         btn.innerHTML = isCollapsed ? 'Show Less <i class="fas fa-chevron-up ml-2"></i>' : 'View More <i class="fas fa-chevron-down ml-2"></i>';
       }
+    </script>
     </script>
   </body>
 </html>
